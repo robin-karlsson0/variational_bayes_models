@@ -41,14 +41,14 @@ def gamma_expectation(a_N, b_N):
     return a_N / b_N
 
 
-def gaussian_quadratic_expectation_wrt_w(mu_N):
+def gaussian_quadratic_expectation_wrt_w(mu_N, sigma_N):
     '''Returns the expected value of the quadratic weight vectors for a Gaussian distribution w.r.t. weights.
     
     Because we are taking the expectations w.r.t. weights, other unrelated terms can be dropped from the general expectation.
     
     Ref: Bishop Eq 10.183 (p.505)
     '''
-    return np.matmul(mu_N.T, mu_N)
+    return np.matmul(mu_N.T, mu_N) + np.trace(sigma_N)
 
 
 def maximization_mu(phis, ts, sigma_N):
@@ -215,8 +215,8 @@ def EM_iteration_func(phi_train, y_train, basis_N, samples_train_N, max_iter, co
     for iter_idx in range(max_iter):
         
         # Expectation step
-        expectation_alpha = gamma_expectation(a_N, b_N)                             # scalar
-        expectation_quadratic_w_wrt_w = gaussian_quadratic_expectation_wrt_w(mu_N)  # scalar
+        expectation_alpha = gamma_expectation(a_N, b_N)                                      # scalar
+        expectation_quadratic_w_wrt_w = gaussian_quadratic_expectation_wrt_w(mu_N, sigma_N)  # scalar
         
         # Maximization step
         a_N = maximization_an(a_0, basis_N)                                         # scalar
