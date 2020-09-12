@@ -2,9 +2,6 @@
 import numpy as np
 from scipy.special import expit
 import matplotlib.pyplot as plt
-from sklearn import preprocessing
-from sklearn.metrics import confusion_matrix
-import os
 
 np.random.seed(seed=0)
 
